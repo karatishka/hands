@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,7 +16,9 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\ArticleController::class, 'index'])->name('home');
+Route::get('/', [ArticleController::class, 'index'])->name('home');
+Route::get('/articles', [ArticleController::class, 'all'])->name('all');
+Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('show');
 
 /*Route::get('/', function () {
     return Inertia::render('Welcome', [
