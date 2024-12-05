@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
+
 class ArticleController extends Controller
 {
     public function index()
     {
-        return inertia('Articles/Index', []);
+        $articles = Article::all()->sortByDesc('id')->take(10)->toArray();
+
+        return inertia('Articles/Index',compact('articles'));
     }
 
     public function all()
