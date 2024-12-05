@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(ArticleSeed::class);
+        $this->call(TagSeed::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

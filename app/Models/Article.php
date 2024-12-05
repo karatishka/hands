@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Article extends Model
 {
@@ -17,7 +17,12 @@ class Article extends Model
 
     public function getShortAttribute()
     {
-        return Str::limit($this->description, 100); // Делаем короткое описание, обрезая до 100 символов
+        return Str::limit($this->description, 100);
+    }
+
+    public function tags(): HasMany
+    {
+        return $this->hasMany(Tag::class);
     }
 }
 

@@ -34,6 +34,13 @@ defineProps({
                     </div>
                 </div>
             </div>
+            <p> теги:</p>
+                <div class=" " v-for="tag in article.tags">
+                    <div
+                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-center      focus:ring-4 focus:outline-none focus:ring-blue-300  ">
+                        <strong>{{ tag.name }}</strong>
+                    </div>
+                </div>
         </div>
     </div>
 </template>
