@@ -15,7 +15,7 @@ defineProps({
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a
                     :href="route('show', { id: article.id })"> {{ article.title }}</a></h5>
             </a>
-            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ article.description }}</p>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ article.short }}</p>
 
             <div class="flex flex-col items-center pb-10">
                 <div class="flex mt-4 md:mt-6">

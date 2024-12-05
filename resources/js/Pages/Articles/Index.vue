@@ -11,7 +11,6 @@ defineProps({
 
 <template>
     <Head title="Home Article"/>
-
     <MainLayout>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
             <template v-for="(article, index  ) in articles" :key="index">

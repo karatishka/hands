@@ -8,13 +8,13 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::all()->sortByDesc('id')->take(10)->toArray();
-
+        $articles = Article::all()->sortByDesc('id')->take(10) ;
         return inertia('Articles/Index',compact('articles'));
     }
 
     public function all()
     {
+        $articles = Article::all()->sortByDesc('id')->take(10)->toArray();
         return inertia('Articles/All', []);
     }
 
