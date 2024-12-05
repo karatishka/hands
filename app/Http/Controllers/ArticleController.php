@@ -14,8 +14,8 @@ class ArticleController extends Controller
 
     public function all()
     {
-        $articles = Article::all()->sortByDesc('id')->take(10)->toArray();
-        return inertia('Articles/All', []);
+        $articles = Article::paginate(12)->toArray();
+        return inertia('Articles/All', compact('articles'));
     }
 
     public function show($id)
