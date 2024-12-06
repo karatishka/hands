@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class RequestController extends Controller
 {
@@ -28,7 +29,7 @@ class RequestController extends Controller
     {
         $query = Like::where('article_id', $id);
         if ($query->exists() ) {
-            $query->increment('count');
+            Cache::increment('view_count', $query->increment('count'));
             $view = $query->first();
         }
         else {
