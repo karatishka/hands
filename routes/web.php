@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,14 +21,9 @@ Route::get('/', [ArticleController::class, 'index'])->name('home');
 Route::get('/articles', [ArticleController::class, 'all'])->name('all');
 Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('show');
 
-/*Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});*/
+Route::post('/comment', [RequestController::class, 'comment'])->name('comment');
+Route::post('/like', [RequestController::class, 'like'])->name('like');
+Route::post('/view', [RequestController::class, 'view'])->name('view');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
