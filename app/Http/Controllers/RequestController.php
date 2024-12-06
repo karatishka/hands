@@ -6,10 +6,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use App\Models\Like;
-use App\Models\User;
 use App\Models\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class RequestController extends Controller
 {
@@ -29,11 +27,10 @@ class RequestController extends Controller
     public function like(Request $request, $id)
     {
         $query = Like::where('article_id', $id);
-        if ($query->exists() ) {
+        if ($query->exists()) {
             $query->increment('count');
             $view = $query->first();
-        }
-        else {
+        } else {
             $view = new Like();
             $view->article_id = $id;
             $view->count = 1;
@@ -46,11 +43,10 @@ class RequestController extends Controller
     public function view(Request $request, $id)
     {
         $query = View::where('article_id', $id);
-        if ($query->exists() ) {
+        if ($query->exists()) {
             $query->increment('count');
             $view = $query->first();
-        }
-        else {
+        } else {
             $view = new View();
             $view->article_id = $id;
             $view->count = 1;
@@ -64,11 +60,10 @@ class RequestController extends Controller
     {
         $query = View::where('article_id', $id);
 
-        if ($query->exists() ) {
+        if ($query->exists()) {
             $view = $query->first();
             return response()->json($view->count);
-        }
-        else {
+        } else {
             response()->json(0);
         }
     }
@@ -77,11 +72,10 @@ class RequestController extends Controller
     {
         $query = Like::where('article_id', $id);
 
-        if ($query->exists() ) {
+        if ($query->exists()) {
             $view = $query->first();
             return response()->json($view->count);
-        }
-        else {
+        } else {
             response()->json(0);
         }
     }
