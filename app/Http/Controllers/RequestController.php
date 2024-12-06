@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use App\Models\Like;
+use App\Models\User;
 use App\Models\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -29,7 +30,7 @@ class RequestController extends Controller
     {
         $query = Like::where('article_id', $id);
         if ($query->exists() ) {
-            Cache::increment('view_count', $query->increment('count'));
+            $query->increment('count');
             $view = $query->first();
         }
         else {
