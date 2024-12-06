@@ -9,19 +9,19 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::with(['tags'])->orderBy('id', 'desc')->take(10)->get();
+        $articles = Article::zh()->orderBy('id', 'desc')->take(10)->get();
         return inertia('Articles/Index', compact('articles'));
     }
 
     public function all()
     {
-        $articles = Article::with(['tags', 'view', 'like'])->paginate(12)->toArray();
+        $articles = Article::zh()->paginate(12)->toArray();
         return inertia('Articles/All', compact('articles'));
     }
 
     public function show($id)
     {
-        $article = Article::findOrFail($id)->where('id', $id)->with(['tags', 'view', 'like'])->get()->first();
+        $article = Article::findOrFail($id)->where('id', $id)->zh()->get()->first();
 
         return inertia('Articles/Show', compact('article'));
     }

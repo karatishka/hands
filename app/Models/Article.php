@@ -35,5 +35,10 @@ class Article extends Model
     {
         return $this->hasOne(Like::class);
     }
+
+    public function scopeZh($query)
+    {
+        return $query->with(['tags', 'view', 'like']);
+    }
 }
 
