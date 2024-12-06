@@ -26,11 +26,11 @@ defineProps({
                             <path
                                 d="M16 0H4a2 2 0 0 0-2 2v1H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13.929 17H7.071a.5.5 0 0 1-.5-.5 3.935 3.935 0 1 1 7.858 0 .5.5 0 0 1-.5.5Z"/>
                         </svg>
-                        <strong>232</strong>
+                        <strong v-if=" article.view "> {{ article.view.count  }}</strong>
                     </div>
                     <div
                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-center      focus:ring-4 focus:outline-none focus:ring-blue-300  ">
-                        <strong>232</strong> <a href="#">❤️</a>
+                        <strong v-if=" article.like "> {{ article.like.count  }}</strong>  ❤️
                     </div>
                 </div>
             </div>

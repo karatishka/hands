@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\View;
 
 class ArticleController extends Controller
 {
@@ -14,13 +15,14 @@ class ArticleController extends Controller
 
     public function all()
     {
-        $articles = Article::with(['tags'])->paginate(12)->toArray();
+        $articles = Article::with(['tags', 'view', 'like'])->paginate(12)->toArray();
         return inertia('Articles/All', compact('articles'));
     }
 
     public function show($id)
     {
-        $article = Article::find($id)->with(['tags'])->latest()->first();
+        $article = Article::findOrFail($id)->where('id', $id)->with(['tags', 'view', 'like'])->get()->first();
+
         return inertia('Articles/Show', compact('article'));
     }
 }

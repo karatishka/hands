@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
+use App\Models\Like;
+use App\Models\View;
 use Illuminate\Http\Request;
 
 class RequestController extends Controller
@@ -15,20 +17,70 @@ class RequestController extends Controller
         //  метод исполняет логику в фоновом режиме
         try {
             Comment::create($request->validated());
-        } catch (\Exception $exception) {
-            return response([$exception->getMessage()], 422);
+        } catch (\Exception $e) {
+            return response([$e->getMessage()], 422);
         }
 
         return response()->json(1);
     }
 
-    public function like(Request $request)
+    public function like(Request $request, $id)
     {
-        return response()->json(1);
+        $query = Like::where('article_id', $id);
+        if ($query->exists() ) {
+            $query->increment('count');
+            $view = $query->first();
+        }
+        else {
+            $view = new Like();
+            $view->article_id = $id;
+            $view->count = 1;
+            $view->save();
+        }
+
+        return response()->json($view->count);
     }
 
-    public function view(Request $request)
+    public function view(Request $request, $id)
     {
-        return response()->json(1);
+        $query = View::where('article_id', $id);
+        if ($query->exists() ) {
+            $query->increment('count');
+            $view = $query->first();
+        }
+        else {
+            $view = new View();
+            $view->article_id = $id;
+            $view->count = 1;
+            $view->save();
+        }
+
+        return response()->json($view->count);
+    }
+
+    public function getView($id)
+    {
+        $query = View::where('article_id', $id);
+
+        if ($query->exists() ) {
+            $view = $query->first();
+            return response()->json($view->count);
+        }
+        else {
+            response()->json(0);
+        }
+    }
+
+    public function getLike($id)
+    {
+        $query = Like::where('article_id', $id);
+
+        if ($query->exists() ) {
+            $view = $query->first();
+            return response()->json($view->count);
+        }
+        else {
+            response()->json(0);
+        }
     }
 }

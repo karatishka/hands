@@ -1,16 +1,59 @@
 <script setup>
 import MainLayout from "@/Layouts/MainLayout.vue";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {usePage} from "@inertiajs/vue3";
+import axios from "axios";
 
 
-defineProps({
+const props = defineProps({
     article: Object
 });
 
 const success = ref(false);
 const subject = ref();
 const body = ref();
+const viewCount = ref(0);
+const likeCount = ref(0);
+
+onMounted(() => {
+    fetchViewCount();
+    fetchLikeCount();
+    setTimeout(() => {
+        incrementView();
+    }, 5000);
+});
+
+function incrementView() {
+    axios.post(route('view', id))
+        .then(res => {
+            viewCount.value = res.data
+        })
+        .catch(err => console.log(err.data))
+}
+
+function incrementLike() {
+    axios.post(route('like', id))
+        .then(res => {
+            likeCount.value = res.data
+        })
+        .catch(err => console.log(err.data))
+}
+
+function fetchViewCount (){
+    axios.get(route('getView', id))
+        .then(res => {
+           viewCount.value = res.data
+        })
+        .catch(err => console.log(err.data))
+}
+
+function fetchLikeCount (){
+    axios.get(route('getLike', id))
+        .then(res => {
+            likeCount.value = res.data
+        })
+        .catch(err => console.log(err.data))
+}
 
 const PageId = () => {
     const parsePageId = (path) => path.substring(path.lastIndexOf('/') + 1)
@@ -45,13 +88,35 @@ function send() {
     <MainLayout>
         <h3 style="color: red">Уже не было сил и варемени верстать =( </h3>
         <div class="flex flex-col items-center">
+            <div class="flex flex-col items-center pb-10">
+                <div class="flex mt-4 md:mt-6">
+                    <div
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-center focus:ring-4 focus:outline-none focus:ring-blue-300">
+                        <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                             fill="currentColor" viewBox="0 0 18 20">
+                            <path
+                                d="M16 0H4a2 2 0 0 0-2 2v1H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13.929 17H7.071a.5.5 0 0 1-.5-.5 3.935 3.935 0 1 1 7.858 0 .5.5 0 0 1-.5.5Z"></path>
+                        </svg>
+                        <strong  >Кол-во просмотрров {{ viewCount }}</strong>
+
+                    </div>
+
+                    <div
+                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-center focus:ring-4 focus:outline-none focus:ring-blue-300">
+                        <strong  >like {{ likeCount }}</strong> <a @click.prevent="incrementLike"
+                        href="#">❤️</a>
+                    </div>
+
+
+                </div>
+            </div>
             <div class="grid grid-cols-1 gap-1">
-                <p><b>id:</b> {{ article.id }}</p>
-                <p><b>title:</b>title: {{ article.title }}</p>
-                <p><b>description:</b>description: {{ article.description }}</p>
+                <p><b>id:</b> {{ props.article.id }}</p>
+                <p><b>title:</b>title: {{ props.article.title }}</p>
+                <p><b>description:</b>description: {{ props.article.description }}</p>
                 <div>
-                    <p><b>tags:</b> tags: </p>
-                    <p v-for="tag in article.tags"> {{ tag.name }}</p>
+                    <p><b>tags:</b></p>
+                    <p v-for="tag in props.article.tags"> {{ tag.name }}</p>
                 </div>
             </div>
         </div>

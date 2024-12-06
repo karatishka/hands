@@ -22,8 +22,12 @@ Route::get('/articles', [ArticleController::class, 'all'])->name('all');
 Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('show');
 
 Route::post('/comment', [RequestController::class, 'comment'])->name('comment');
-Route::post('/like', [RequestController::class, 'like'])->name('like');
-Route::post('/view', [RequestController::class, 'view'])->name('view');
+
+Route::post('/like/{id}', [RequestController::class, 'like'])->name('like');
+Route::get('/get-like/{id}', [RequestController::class, 'getLike'])->name('getLike');
+
+Route::get('/get-view/{id}', [RequestController::class, 'getView'])->name('getView');
+Route::post('/view/{id}', [RequestController::class, 'view'])->name('view');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
