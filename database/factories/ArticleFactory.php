@@ -22,7 +22,7 @@ class ArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->words(10, true),
+            'title' => fake()->realText(40 ),
             'description' => fake()->text(),
         ];
     }
