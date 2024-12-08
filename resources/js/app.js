@@ -1,6 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
 import 'flowbite';
+import vuetify from "./vuetify";
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -16,6 +17,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(vuetify)
             .mount(el);
     },
     progress: {
