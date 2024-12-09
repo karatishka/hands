@@ -23,7 +23,7 @@ class ArticleFactory extends Factory
     {
         return [
             'title' => fake()->realText(40 ),
-            'description' => fake()->text(),
+            'description' => fake()->text(300),
         ];
     }
 }
