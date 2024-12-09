@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\CommentRequest;
+use App\Jobs\UpdateArticleViews;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Queue;
 
 class RequestController extends Controller
 {
@@ -44,8 +47,9 @@ class RequestController extends Controller
     {
         $query = View::where('article_id', $id);
         if ($query->exists()) {
-            $query->increment('count');
-            $view = $query->first();
+            Redis::incr("view:{$id}:views");
+            Queue::push(new UpdateArticleViews($id));
+            return response()->json($query->count);
         } else {
             $view = new View();
             $view->article_id = $id;
