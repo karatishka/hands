@@ -113,7 +113,7 @@ function send() {
             <div class="grid grid-cols-1 gap-1">
                 <p><b>id:</b> {{ props.article.id }}</p>
                 <p><b>title:</b>title: {{ props.article.title }}</p>
-                <p><b>description:</b>description: {{ props.article.description }}</p>
+                <p><b>description:</b> {{ props.article.description }}</p>
                 <div>
                     <p><b>tags:</b></p>
                     <p v-for="tag in props.article.tags"> {{ tag.name }}</p>
