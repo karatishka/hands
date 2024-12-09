@@ -86,7 +86,7 @@ function send() {
 
 <template>
     <MainLayout>
-        <h3 style="color: red">Уже не было сил и варемени верстать =( </h3>
+        <h3 style="color: red">Уже не было сил и времени верстать =( </h3>
         <div class="flex flex-col items-center">
             <div class="flex flex-col items-center pb-10">
                 <div class="flex mt-4 md:mt-6">
