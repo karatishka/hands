@@ -49,7 +49,7 @@ class RequestController extends Controller
         if ($query->exists()) {
             Redis::incr("view:{$id}:views");
             Queue::push(new UpdateArticleViews($id));
-            return response()->json($query->count);
+            return response()->json($query->first()->count);
         } else {
             $view = new View();
             $view->article_id = $id;
