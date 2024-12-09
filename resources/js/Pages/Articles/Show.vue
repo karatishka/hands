@@ -4,7 +4,6 @@ import {onMounted, ref} from "vue";
 import {usePage} from "@inertiajs/vue3";
 import axios from "axios";
 
-
 const props = defineProps({
     article: Object
 });
@@ -39,15 +38,15 @@ function incrementLike() {
         .catch(err => console.log(err.data))
 }
 
-function fetchViewCount (){
+function fetchViewCount() {
     axios.get(route('getView', id))
         .then(res => {
-           viewCount.value = res.data
+            viewCount.value = res.data
         })
         .catch(err => console.log(err.data))
 }
 
-function fetchLikeCount (){
+function fetchLikeCount() {
     axios.get(route('getLike', id))
         .then(res => {
             likeCount.value = res.data
@@ -97,17 +96,13 @@ function send() {
                             <path
                                 d="M16 0H4a2 2 0 0 0-2 2v1H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13.929 17H7.071a.5.5 0 0 1-.5-.5 3.935 3.935 0 1 1 7.858 0 .5.5 0 0 1-.5.5Z"></path>
                         </svg>
-                        <strong  >Кол-во просмотрров {{ viewCount }}</strong>
-
+                        <strong>Кол-во просмотрров {{ viewCount }}</strong>
                     </div>
-
                     <div
                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-center focus:ring-4 focus:outline-none focus:ring-blue-300">
-                        <strong  >like {{ likeCount }}</strong> <a @click.prevent="incrementLike"
-                        href="#">❤️</a>
+                        <strong>like {{ likeCount }}</strong> <a @click.prevent="incrementLike"
+                                                                 href="#">❤️</a>
                     </div>
-
-
                 </div>
             </div>
             <div class="grid grid-cols-1 gap-1">
@@ -120,10 +115,7 @@ function send() {
                 </div>
             </div>
         </div>
-
         <hr>
-
-
         <div v-if="success">
             <p style="color: darkgreen">Успешно отправлено</p>
         </div>
@@ -148,6 +140,5 @@ function send() {
                 Submit
             </button>
         </form>
-
     </MainLayout>
 </template>
