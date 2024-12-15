@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Requests\CommentRequest;
+use App\Jobs\LongRunningJob;
 use App\Jobs\UpdateArticleViews;
-use App\Models\Comment;
 use App\Models\Like;
 use App\Models\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Queue;
 
 class RequestController extends Controller
 {
@@ -19,7 +17,8 @@ class RequestController extends Controller
         //  sleep(600)
         //  метод исполняет логику в фоновом режиме
         try {
-            Comment::create($request->validated());
+            $data = $request->validated();
+            LongRunningJob::dispatch($data)->delay(now()->addMinutes(10));
         } catch (\Exception $e) {
             return response([$e->getMessage()], 422);
         }
@@ -47,9 +46,8 @@ class RequestController extends Controller
     {
         $query = View::where('article_id', $id);
         if ($query->exists()) {
-            Redis::incr("view:{$id}:views");
-            Queue::push(new UpdateArticleViews($id));
-            return response()->json($query->first()->count);
+            $query->increment('count');
+            $view = $query->first()->count;
         } else {
             $view = new View();
             $view->article_id = $id;
