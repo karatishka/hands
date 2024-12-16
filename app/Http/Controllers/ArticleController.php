@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Models\View;
+use Illuminate\Support\Facades\Cache;
 
 class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = Article::zh()->orderBy('id', 'desc')->take(6)->get();
+        $articles = Cache::remember('articles', 3600, function () {
+            return Article::zh()->orderBy('id', 'desc')->take(6)->get();
+        });
         return inertia('Articles/Index', compact('articles'));
     }
 
